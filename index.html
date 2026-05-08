@@ -70,7 +70,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 80px 10vw;
+    padding: 100px 10vw 100px 12vw;
     overflow: hidden;
   }
 
@@ -107,11 +107,11 @@
 
   .hero-title {
     font-family: 'Tenor Sans', Georgia, sans-serif;
-    font-size: clamp(52px, 8vw, 110px);
+    font-size: clamp(42px, 5vw, 72px);
     font-weight: 900;
     color: var(--white);
-    line-height: 0.95;
-    letter-spacing: -2px;
+    line-height: 1.05;
+    letter-spacing: -0.5px;
     margin-bottom: 48px;
     opacity: 0;
     animation: fadeUp 0.9s 0.4s forwards;
@@ -125,10 +125,10 @@
   .hero-sub {
     font-size: 18px;
     font-weight: 400;
-    color: rgba(255,255,255,0.5);
-    font-style: italic;
-    max-width: 520px;
-    line-height: 1.75;
+    color: rgba(255,255,255,0.72);
+    font-style: normal;
+    max-width: 560px;
+    line-height: 1.8;
     margin-bottom: 64px;
     opacity: 0;
     animation: fadeUp 1s 0.6s forwards;
@@ -205,7 +205,7 @@
   .section-inner {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 100px 40px;
+    padding: 110px 60px;
   }
 
   .section-label {
@@ -219,27 +219,27 @@
 
   .section-title {
     font-family: 'Tenor Sans', sans-serif;
-    font-size: clamp(36px, 5vw, 62px);
-    font-weight: 900;
-    line-height: 1.05;
-    letter-spacing: -1px;
-    margin-bottom: 48px;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 32px;
   }
 
   /* ── INTRO SECTION ── */
-  .intro { background: var(--cream); }
+  .intro { background: var(--cream); border-top: 3px solid var(--red); }
 
   .intro-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
+    gap: 56px;
+    align-items: stretch;
   }
 
   .intro-text {
-    font-size: 18px;
-    line-height: 1.7;
-    color: #444;
+    font-size: 16px;
+    line-height: 1.85;
+    color: #4A4A5A;
     font-weight: 400;
   }
 
@@ -248,9 +248,12 @@
   .intro-highlight {
     background: var(--charcoal);
     color: var(--white);
-    padding: 36px 40px;
+    padding: 48px 44px;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    min-height: 240px;
   }
 
   .intro-highlight::before {
@@ -262,11 +265,11 @@
   }
 
   .intro-highlight p {
-    font-family: 'Tenor Sans', sans-serif;
-    font-size: 18px;
-    font-style: italic;
-    line-height: 1.75;
-    color: rgba(255,255,255,0.9);
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.85);
   }
 
   .intro-highlight strong {
@@ -450,6 +453,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    max-width: 66.6%;
   }
 
   .price-card {
@@ -511,8 +515,8 @@
   .price-card:not(.featured) .price-amount { color: var(--red); }
 
   .price-desc {
-    font-size: 13px;
-    color: rgba(255,255,255,0.45);
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
     line-height: 1.75;
     border-top: 1px solid rgba(255,255,255,0.08);
     padding-top: 16px;
@@ -556,13 +560,13 @@
     font-size: 72px;
     font-weight: 900;
     color: var(--red);
-    opacity: 0.15;
+    opacity: 0.35;
     line-height: 1;
     margin-bottom: 16px;
     transition: opacity 0.3s;
   }
 
-  .step:hover .step-num { opacity: 0.3; }
+  .step:hover .step-num { opacity: 0.6; }
 
   .step-title {
     font-family: 'Tenor Sans', sans-serif;
@@ -1238,19 +1242,19 @@
         <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--wb);margin-bottom:20px;text-transform:uppercase">Технические требования WB</div>
         <div style="display:flex;flex-direction:column;gap:16px">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+            <div style="background:rgba(255,255,255,0.10);padding:16px;text-align:center">
               <div style="font-family:'Tenor Sans',serif;font-size:28px;font-weight:900;color:var(--white)">900×1200</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">пикселей — главное фото</div>
             </div>
-            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+            <div style="background:rgba(255,255,255,0.10);padding:16px;text-align:center">
               <div style="font-family:'Tenor Sans',serif;font-size:28px;font-weight:900;color:var(--white)">100</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">символов — лимит заголовка</div>
             </div>
-            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+            <div style="background:rgba(255,255,255,0.10);padding:16px;text-align:center">
               <div style="font-family:'Tenor Sans',serif;font-size:28px;font-weight:900;color:var(--white)">30</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">фото максимум в карточке</div>
             </div>
-            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+            <div style="background:rgba(255,255,255,0.10);padding:16px;text-align:center">
               <div style="font-family:'Tenor Sans',serif;font-size:28px;font-weight:900;color:var(--white)">5 мин</div>
               <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">максимум для видео</div>
             </div>
@@ -1368,7 +1372,7 @@
     <div class="reveal">
       <a class="cta-btn" href="https://t.me/Aleksey_relaxolog_Chistyakov" target="_blank">Написать в Telegram</a>
     </div>
-    <div class="cta-name reveal">Алексей Чистяков · AI-продюсер карточек для Wildberries</div>
+    <div class="cta-name reveal" style="margin-top:64px">Алексей Чистяков · AI-продюсер карточек для Wildberries</div>
   </div>
 </section>
 
