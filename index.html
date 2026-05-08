@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КП — Алексей Чистяков · AI-продюсер карточек WB</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C0392B;
+    --red-dark: #96281B;
+    --red-light: #FDECEA;
+    --charcoal: #2C2C3E;
+    --charcoal2: #363650;
+    --ink: #252538;
+    --white: #F4F2EE;
+    --cream: #EDEAE4;
+    --warm-gray: #E4E0D8;
+    --mid: #7F8C8D;
+    --border: #D0C9C0;
+    --wb: #CB11AB;
+    --wb-light: #F9E6F6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--ink);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 10vw;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(192,57,43,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(192,57,43,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .hero-sub {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero-author {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeUp 1s 0.8s forwards;
+  }
+
+  .hero-author-line {
+    width: 40px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .hero-author-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .hero-author-role {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    font-style: italic;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+    animation: scrollPulse 2s infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: translateY(24px); }
+  }
+
+  /* ── SECTION BASE ── */
+  section { position: relative; }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 48px;
+  }
+
+  /* ── INTRO SECTION ── */
+  .intro { background: var(--cream); }
+
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .intro-text {
+    font-size: 20px;
+    line-height: 1.7;
+    color: #444;
+    font-weight: 300;
+  }
+
+  .intro-text strong { color: var(--charcoal); font-weight: 600; }
+
+  .intro-highlight {
+    background: var(--charcoal);
+    color: var(--white);
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .intro-highlight::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--red);
+  }
+
+  .intro-highlight p {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .intro-highlight strong {
+    color: var(--red);
+    font-style: normal;
+  }
+
+  /* ── SERVICES SECTION ── */
+  .services { background: var(--charcoal); }
+  .services .section-title { color: var(--white); }
+  .services .section-label { color: var(--red); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .service-card {
+    background: var(--charcoal);
+    padding: 44px 40px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .service-card:hover { background: rgba(255,255,255,0.04); }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--red);
+    transition: height 0.4s ease;
+  }
+
+  .service-card:hover::after { height: 100%; }
+
+  .service-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+
+  .service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service-list li {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .service-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-size: 12px;
+  }
+
+  /* ── NO STUDIO SECTION ── */
+  .nostudio { background: var(--warm-gray); }
+
+  .nostudio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 16px;
+  }
+
+  .nostudio-card {
+    padding: 48px 44px;
+    position: relative;
+  }
+
+  .nostudio-card.no {
+    background: var(--white);
+    border: 1px solid var(--border);
+  }
+
+  .nostudio-card.yes {
+    background: var(--charcoal);
+    color: var(--white);
+  }
+
+  .card-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-header .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .nostudio-card.no .icon { background: var(--border); color: var(--mid); }
+  .nostudio-card.yes .icon { background: var(--red); color: white; }
+
+  .nostudio-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .nostudio-card.no .nostudio-list li {
+    font-size: 16px;
+    color: var(--mid);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.4;
+    text-decoration: line-through;
+    text-decoration-color: var(--border);
+  }
+
+  .nostudio-card.no .nostudio-list li::before {
+    content: '×';
+    position: absolute;
+    left: 0;
+    color: var(--border);
+  }
+
+  .nostudio-card.yes .nostudio-list li {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .nostudio-card.yes .nostudio-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: bold;
+  }
+
+  /* ── PRICING SECTION ── */
+  .pricing { background: var(--ink); overflow: hidden; }
+  .pricing .section-title { color: var(--white); }
+  .pricing .section-label { color: var(--red); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .pricing-row2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .price-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 36px 32px;
+    position: relative;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: default;
+  }
+
+  .price-card:hover {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  .price-card.featured {
+    background: var(--red);
+    border-color: var(--red);
+    transform: scale(1.02);
+    z-index: 1;
+  }
+
+  .price-card.featured:hover {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+  }
+
+  .price-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
+  }
+
+  .price-card.featured .price-badge { color: rgba(255,255,255,0.8); }
+
+  .price-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 20px;
+    line-height: 1;
+  }
+
+  .price-card.featured .price-amount { color: var(--white); }
+  .price-card:not(.featured) .price-amount { color: var(--red); }
+
+  .price-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
+  }
+
+  .price-card.featured .price-desc { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2); }
+
+  .pricing-note {
+    text-align: center;
+    margin-top: 32px;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .pricing-note span { color: var(--red); }
+
+  /* ── APPROACH SECTION ── */
+  .approach { background: var(--cream); }
+
+  .approach-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .step {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .step:last-child { border-right: none; }
+  .step:hover { background: var(--white); }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: var(--red);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: 16px;
+    transition: opacity 0.3s;
+  }
+
+  .step:hover .step-num { opacity: 0.3; }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 16px;
+  }
+
+  .step-desc {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  .approach-quote {
+    background: var(--charcoal);
+    padding: 48px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .approach-quote::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 200px;
+    color: var(--red);
+    opacity: 0.1;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .approach-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+
+  /* ── GUARANTEES SECTION ── */
+  .guarantees { background: var(--warm-gray); }
+
+  .guarantees-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .guarantee-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+  }
+
+  .guarantee-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .guarantee-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+    margin-top: 8px;
+  }
+
+  .guarantee-text strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--charcoal);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .guarantee-text span {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+
+  .cosmetics-box {
+    background: var(--charcoal);
+    padding: 40px;
+    color: var(--white);
+  }
+
+  .cosmetics-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .cosmetics-box h3 span { color: var(--red); }
+
+  .cosmetics-box p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .formula-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .formula-list li {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.04);
+    border-left: 2px solid var(--red);
+    line-height: 1.4;
+  }
+
+  .formula-list li strong { color: var(--red); font-weight: 600; }
+
+  .disclaimer {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+    line-height: 1.6;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 16px;
+  }
+
+  /* ── CTA SECTION ── */
+  .cta {
+    background: var(--ink);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(192,57,43,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.0;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
+
+  .cta-title em { color: var(--red); font-style: italic; }
+
+  .cta-sub {
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 56px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    padding: 20px 56px;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-btn:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+  }
+
+  .cta-name {
+    margin-top: 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.2);
+    text-transform: uppercase;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15,15,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transform: translateY(-100%);
+    transition: transform 0.4s ease;
+  }
+
+  nav.visible { transform: translateY(0); }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .nav-brand span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  /* ── DIVIDER ── */
+  .red-divider {
+    height: 3px;
+    background: var(--red);
+    width: 60px;
+    margin-bottom: 32px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { padding: 80px 24px; }
+    .section-inner { padding: 70px 24px; }
+    .intro-grid, .nostudio-grid, .guarantees-grid { grid-template-columns: 1fr; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-row2 { grid-template-columns: 1fr; }
+    .approach-steps { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--border); }
+    .step:last-child { border-bottom: none; }
+    nav { display: none; }
+  }
+  /* ── CHECKLIST ── */
+  .checklist-item {
+    display: flex;
+    gap: 20px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 24px 28px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    user-select: none;
+  }
+
+  .checklist-item:hover {
+    border-color: var(--red);
+    transform: translateX(4px);
+  }
+
+  .checklist-item.checked {
+    background: var(--red-light);
+    border-color: var(--red);
+  }
+
+  .checklist-item.checked .ci-num { color: var(--red); }
+
+  .ci-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--border);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: color 0.2s;
+  }
+
+  .ci-body { display: flex; flex-direction: column; gap: 6px; }
+
+  .ci-body strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1.3;
+  }
+
+  .ci-body span {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    #checklist > .section-inner > div { grid-template-columns: 1fr !important; }
+    #wb-know > .section-inner > div:first-of-type { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-brand">Алексей <span>Чистяков</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#pricing">Цены</a></li>
+    <li><a href="#wb-know">Знаю WB</a></li>
+    <li><a href="#checklist">Ошибки</a></li>
+    <li><a href="#approach">Подход</a></li>
+    <li><a href="#guarantees">Гарантии</a></li>
+    <li><a href="#cta">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-label">Коммерческое предложение · 2026</div>
+  <h1 class="hero-title">AI-продюсер<br><em>карточек</em><br>для WB</h1>
+  <p class="hero-sub">Визуал, SEO и видео для косметики на Wildberries — без студии, дизайнера и вашего участия в производстве</p>
+  <div class="hero-author">
+    <div class="hero-author-line"></div>
+    <div>
+      <div class="hero-author-name">Алексей Чистяков</div>
+      <div class="hero-author-role">AI-продюсер карточек для Wildberries</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Листать</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro" id="intro">
+  <div class="section-inner">
+    <div class="intro-grid">
+      <div class="reveal-left">
+        <div class="section-label">О предложении</div>
+        <h2 class="section-title">Карточка, которая помогает покупателю принять решение</h2>
+        <div class="red-divider"></div>
+        <p class="intro-text">
+          Я создаю карточки косметики на Wildberries с помощью современных AI-инструментов. 
+          Вместо фотостудии, видеографа и отдельного копирайтера — <strong>один специалист, полный цикл, предсказуемый результат.</strong>
+          <br><br>
+          Моя задача — не просто сделать красивые картинки, а собрать карточку так, чтобы покупатель 
+          за первые секунды понял: что это за продукт, для кого он, какой эффект даёт и почему ему можно доверять.
+        </p>
+      </div>
+      <div class="reveal-right">
+        <div class="intro-highlight">
+          <p>Вы присылаете ссылку на товар и фото упаковки. Я возвращаю <strong>готовый комплект файлов</strong> для загрузки на WB. Ваше участие в производстве — минимально.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Полный перечень услуг</div>
+      <h2 class="section-title" style="color:white">Что входит в работу</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01 / АНАЛИТИКА</div>
+        <div class="service-title">Стратегия и исследование</div>
+        <ul class="service-list">
+          <li>Аудит текущей карточки и позиций в выдаче WB</li>
+          <li>Анализ карточек 3–5 топ-конкурентов в вашей нише</li>
+          <li>Сбор семантики — все запросы, по которым ищут ваш товар</li>
+          <li>Базовые рекомендации по акциям WB</li>
+        </ul>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.1s">
+        <div class="service-num">02 / ВИЗУАЛ</div>
+        <div class="service-title">Фото и инфографика</div>
+        <ul class="service-list">
+          <li>Обложка — главный визуал с УТП и эффектом продукта</li>
+          <li>5–7 слайдов: состав, эффект, применение, для кого</li>
+          <li>Фон и окружение продукта без студийной съёмки</li>
+          <li>Слайд «Доверие» — сертификаты, натуральность, факты</li>
+        </ul>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.2s">
+        <div class="service-num">03 / ВИДЕО</div>
+        <div class="service-title">Видеокарточка на AI</div>
+        <ul class="service-list">
+          <li>Анимация флакона — вращение, блики, эффекты частиц</li>
+          <li>AI-ведущий презентует продукт на русском языке</li>
+          <li>Профессиональная озвучка — естественный голос</li>
+          <li>Субтитры + финальный монтаж MP4 (30–45 сек)</li>
+        </ul>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.3s">
+        <div class="service-num">04 / ТЕКСТЫ</div>
+        <div class="service-title">SEO и контент</div>
+        <ul class="service-list">
+          <li>SEO-заголовок до 100 символов с ключевыми запросами</li>
+          <li>Описание — структурированный текст с выгодами и ключами</li>
+          <li>Полное заполнение всех характеристик в WB</li>
+          <li>Шаблоны ответов на вопросы и возражения покупателей</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NO STUDIO -->
+<section class="nostudio" id="nostudio">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Преимущество</div>
+      <h2 class="section-title">Что от вас не требуется</h2>
+    </div>
+    <div class="nostudio-grid">
+      <div class="nostudio-card no reveal-left">
+        <div class="card-header">
+          <div class="icon">✕</div>
+          Без этого обойдёмся
+        </div>
+        <ul class="nostudio-list">
+          <li>Фотостудия и фотограф</li>
+          <li>Видеограф и живая модель</li>
+          <li>Отдельный копирайтер</li>
+          <li>Дизайнер слайдов</li>
+          <li>Ваше время на производство</li>
+        </ul>
+      </div>
+      <div class="nostudio-card yes reveal-right">
+        <div class="card-header" style="color:white">
+          <div class="icon">✓</div>
+          От вас только
+        </div>
+        <ul class="nostudio-list">
+          <li>Ссылка на товар или фото упаковки</li>
+          <li>Согласование готового результата</li>
+          <li>Загрузка файлов в личный кабинет WB — доступ к кабинету не обязателен, работаю по ссылке и фото</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Стоимость</div>
+      <h2 class="section-title">Пакеты и цены</h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-badge">Старт</div>
+        <div class="price-name">Экспресс-аудит</div>
+        <div class="price-amount">3 000 ₽</div>
+        <div class="price-desc">Разбор карточки + анализ 3–5 конкурентов + список ошибок + план улучшений. Формат: PDF с рекомендациями по SEO и структуре. Срок: 1–2 дня</div>
+      </div>
+      <div class="price-card featured reveal" style="transition-delay:0.15s">
+        <div class="price-badge">★ Рекомендуем</div>
+        <div class="price-name">Карточка под ключ</div>
+        <div class="price-amount">20 000 ₽</div>
+        <div class="price-desc">Аудит + обложка + 5–7 слайдов + SEO-заголовок + описание + характеристики + AI-видео 30–45 сек + озвучка + субтитры + монтаж MP4. До 2 раундов правок. Срок: 3–5 дней</div>
+      </div>
+      <div class="price-card reveal" style="transition-delay:0.3s">
+        <div class="price-badge">Без видео</div>
+        <div class="price-name">Карточка без видео</div>
+        <div class="price-amount">12 000 ₽</div>
+        <div class="price-desc">Аудит + обложка + 5–7 слайдов + SEO-заголовок + описание + характеристики. До 2 раундов правок. Срок: 2–3 дня</div>
+      </div>
+    </div>
+    <div class="pricing-row2">
+      <div class="price-card reveal">
+        <div class="price-badge">Ежемесячно</div>
+        <div class="price-name">Ведение карточки</div>
+        <div class="price-amount">8 000 ₽<span style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.3)"> /мес</span></div>
+        <div class="price-desc">До 20 ответов на отзывы и вопросы + 2 обновления карточки под акции + мониторинг 5–10 запросов + отчёт раз в месяц</div>
+      </div>
+      <div class="price-card reveal" style="transition-delay:0.15s">
+        <div class="price-badge">Выгодно</div>
+        <div class="price-name">Карточка + ведение</div>
+        <div class="price-amount">24 000 ₽</div>
+        <div class="price-desc">Пакет «Под ключ» + первый месяц ведения со скидкой 50%. Лучший вариант для старта</div>
+      </div>
+    </div>
+    <p class="pricing-note reveal">При заказе от 3 карточек — <span>скидка 15%</span> на каждую последующую</p>
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section class="approach" id="approach">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">О подходе</div>
+      <h2 class="section-title">Почему AI — это не «криво и случайно»</h2>
+    </div>
+    <div class="approach-steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Анализ</div>
+        <p class="step-desc">Изучаю товар, нишу, конкурентов и логику покупателя. AI ускоряет производство, но каждый элемент проверяется вручную на соответствие нише</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.15s">
+        <div class="step-num">02</div>
+        <div class="step-title">Структура</div>
+        <p class="step-desc">Строю карточку по маркетинговой логике: обложка работает на клик, слайды закрывают возражения, видео усиливает доверие</p>
+      </div>
+      <div class="step reveal" style="transition-delay:0.3s">
+        <div class="step-num">03</div>
+        <div class="step-title">Результат</div>
+        <p class="step-desc">Готовый комплект файлов с пояснениями — что куда загружать, как отслеживать первые результаты и что менять при необходимости</p>
+      </div>
+    </div>
+    <div class="approach-quote reveal">
+      <p>Моя задача — собрать карточку так, чтобы покупатель за первые секунды понял: что это за продукт, для кого он, какой эффект даёт и почему ему можно доверять</p>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEES -->
+<section class="guarantees" id="guarantees">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Гарантии</div>
+      <h2 class="section-title">Условия работы</h2>
+    </div>
+    <div class="guarantees-grid">
+      <div class="reveal-left">
+        <div class="guarantee-item">
+          <div class="guarantee-dot"></div>
+          <div class="guarantee-text">
+            <strong>До 2 раундов правок</strong>
+            <span>В течение 7 дней после сдачи. Мелкие технические правки — без ограничений</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <div class="guarantee-dot"></div>
+          <div class="guarantee-text">
+            <strong>Исходники в комплекте</strong>
+            <span>Все файлы передаются вам в полном объёме</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <div class="guarantee-dot"></div>
+          <div class="guarantee-text">
+            <strong>Конфиденциальность</strong>
+            <span>Не использую ваши материалы в портфолио без письменного согласия</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <div class="guarantee-dot"></div>
+          <div class="guarantee-text">
+            <strong>Оплата частями</strong>
+            <span>50% предоплата, остаток — после согласования результата</span>
+          </div>
+        </div>
+        <div class="guarantee-item">
+          <div class="guarantee-dot"></div>
+          <div class="guarantee-text">
+            <strong>Доступ к WB не обязателен</strong>
+            <span>Работаю по ссылке на товар и фото упаковки. Если нужен доступ — только с ограниченными правами</span>
+          </div>
+        </div>
+      </div>
+      <div class="cosmetics-box reveal-right">
+        <h3>Специфика <span>косметики</span></h3>
+        <p>Я аккуратно работаю с формулировками и не использую неподтверждённые медицинские обещания. Это защищает вас от претензий покупателей и требований WB.</p>
+        <ul class="formula-list">
+          <li><strong>«Помогает увлажнить»</strong> — вместо «увлажняет на 100%»</li>
+          <li><strong>«Визуально улучшает тон»</strong> — вместо «осветляет пигментацию»</li>
+          <li><strong>«Создаёт ощущение мягкости»</strong> — вместо «разглаживает кожу»</li>
+        </ul>
+        <p class="disclaimer">Важно: я усиливаю визуал, текст, SEO и подачу карточки. Продажи зависят не только от карточки, но и от цены, отзывов, рейтинга, остатков, рекламы и конкуренции в нише.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WB KNOW -->
+<section style="background:var(--ink)" id="wb-know">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label" style="color:var(--wb)">Wildberries изнутри</div>
+      <h2 class="section-title" style="color:var(--white)">Знаю платформу — говорю на вашем языке</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px">
+      <!-- Terminology -->
+      <div class="reveal-left" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:36px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--wb);margin-bottom:20px;text-transform:uppercase">Терминология WB</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">СПП</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Скидка постоянного покупателя — влияет на позицию в выдаче</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">FBO / FBS</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Схемы логистики — влияют на скорость доставки и рейтинг</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">CTR</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Кликабельность обложки — первое что улучшает инфографика</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">% выкупа</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Для косметики норма 85–95% — зависит от честности карточки</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">Индексация</span>
+            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Попадание в поиск по запросам — зависит от SEO в карточке</span>
+          </div>
+        </div>
+      </div>
+      <!-- Tech specs -->
+      <div class="reveal-right" style="background:rgba(203,17,171,0.08);border:1px solid rgba(203,17,171,0.2);padding:36px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--wb);margin-bottom:20px;text-transform:uppercase">Технические требования WB</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+              <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--white)">900×1200</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">пикселей — главное фото</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+              <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--white)">100</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">символов — лимит заголовка</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+              <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--white)">30</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">фото максимум в карточке</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.04);padding:16px;text-align:center">
+              <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--white)">5 мин</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">максимум для видео</div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.35);font-style:italic;line-height:1.6;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px">
+            Все материалы сдаю в форматах, готовых к загрузке в личный кабинет WB — без лишних технических вопросов с вашей стороны
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- WB badge -->
+    <div class="reveal" style="display:flex;align-items:center;gap:16px;background:rgba(203,17,171,0.1);border:1px solid rgba(203,17,171,0.25);padding:24px 32px">
+      <div style="width:10px;height:10px;border-radius:50%;background:var(--wb);flex-shrink:0"></div>
+      <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.6">Работаю только с Wildberries — знаю алгоритмы ранжирования, требования модерации и специфику косметической ниши на этой платформе</p>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section style="background:var(--warm-gray)" id="checklist">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Диагностика</div>
+      <h2 class="section-title">10 ошибок карточки, которые убивают продажи на WB</h2>
+      <p style="font-size:18px;color:var(--mid);font-style:italic;margin-top:-24px;margin-bottom:48px">Отметьте, сколько пунктов есть у вас прямо сейчас</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="checklist-item reveal" data-n="01">
+        <div class="ci-num">01</div>
+        <div class="ci-body">
+          <strong>Главное фото — просто товар на белом</strong>
+          <span>Без инфографики, без УТП, без причины кликнуть. CTR падает — карточка теряет позиции</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="02" style="transition-delay:0.05s">
+        <div class="ci-num">02</div>
+        <div class="ci-body">
+          <strong>Заголовок написан «красиво», а не под поиск</strong>
+          <span>«Крем Бархатная кожа» никто не ищет. Теряете весь органический трафик по ключевым запросам</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="03" style="transition-delay:0.1s">
+        <div class="ci-num">03</div>
+        <div class="ci-body">
+          <strong>Характеристики заполнены частично</strong>
+          <span>WB ранжирует карточки по фильтрам. Незаполненный «тип кожи» — минус охват по всем связанным запросам</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="04" style="transition-delay:0.15s">
+        <div class="ci-num">04</div>
+        <div class="ci-body">
+          <strong>Нет ответов на негативные отзывы</strong>
+          <span>В косметике покупатели читают отзывы особенно внимательно. Молчание = отсутствие сервиса</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="05" style="transition-delay:0.2s">
+        <div class="ci-num">05</div>
+        <div class="ci-body">
+          <strong>Нет видео в карточке</strong>
+          <span>Покупатель не может потрогать крем. Видео с текстурой и нанесением — единственная замена тактильному опыту</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="06" style="transition-delay:0.25s">
+        <div class="ci-num">06</div>
+        <div class="ci-body">
+          <strong>Слайды дублируют друг друга</strong>
+          <span>Каждый слайд должен закрывать одно возражение. Если 3 слайда говорят одно и то же — это потеря пространства</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="07" style="transition-delay:0.3s">
+        <div class="ci-num">07</div>
+        <div class="ci-body">
+          <strong>Нет слайда «для кого»</strong>
+          <span>Без указания типа кожи и возраста покупатель косметики не понимает — его это или нет. Высокий процент возвратов</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="08" style="transition-delay:0.35s">
+        <div class="ci-num">08</div>
+        <div class="ci-body">
+          <strong>Рискованные формулировки в описании</strong>
+          <span>«Убирает морщины», «лечит акне» — без подтверждения это нарушение требований WB и Роспотребнадзора</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="09" style="transition-delay:0.4s">
+        <div class="ci-num">09</div>
+        <div class="ci-body">
+          <strong>Нули в остатках без архивации</strong>
+          <span>Карточка с нулевым остатком теряет позиции. После восстановления склада — долгое восстановление рейтинга</span>
+        </div>
+      </div>
+      <div class="checklist-item reveal" data-n="10" style="transition-delay:0.45s">
+        <div class="ci-num">10</div>
+        <div class="ci-body">
+          <strong>Не участвуете в акциях WB</strong>
+          <span>Алгоритм WB продвигает участников акций. Отказ от акций = потеря органической видимости в выдаче</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="margin-top:40px;background:var(--charcoal);padding:32px 40px;display:flex;align-items:center;gap:32px">
+      <div style="font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:var(--red);flex-shrink:0" id="score">?</div>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px" id="score-title">Нажмите на пункты выше, которые есть у вас</div>
+        <div style="font-size:15px;color:rgba(255,255,255,0.5)" id="score-desc">Посчитаем сколько точек роста в вашей карточке</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="cta-inner">
+    <div class="cta-label reveal">Следующий шаг</div>
+    <h2 class="cta-title reveal">Бесплатный<br><em>аудит</em><br>за 24 часа</h2>
+    <p class="cta-sub reveal">Напишите — разберу вашу карточку и покажу точки роста</p>
+    <div class="reveal">
+      <a class="cta-btn" href="#">Написать Алексею</a>
+    </div>
+    <div class="cta-name reveal">Алексей Чистяков · AI-продюсер карточек для Wildberries</div>
+  </div>
+</section>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+  // Nav show after hero
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('visible', window.scrollY > window.innerHeight * 0.7);
+  });
+
+  // Checklist interactivity
+  const items = document.querySelectorAll('.checklist-item');
+  const scoreEl = document.getElementById('score');
+  const titleEl = document.getElementById('score-title');
+  const descEl = document.getElementById('score-desc');
+
+  const messages = [
+    { t: 'Отлично!', d: 'Ошибок не найдено — карточка уже работает хорошо. Можно усилить видеокарточкой.' },
+    { t: '1–2 точки роста', d: 'Почти всё в порядке. Небольшие правки дадут заметный прирост CTR.' },
+    { t: '3–4 точки роста', d: 'Есть над чем поработать. Устранение этих ошибок даёт +20–40% к конверсии.' },
+    { t: '5–6 точек роста', d: 'Карточка теряет значительную часть трафика. Комплексная доработка окупится быстро.' },
+    { t: '7–8 точек роста', d: 'Карточка работает в половину силы. Это прямые потери продаж каждый день.' },
+    { t: '9–10 точек роста', d: 'Карточка не раскрывает потенциал товара. Полная переупаковка даст кратный рост.' },
+  ];
+
+  function updateScore() {
+    const count = document.querySelectorAll('.checklist-item.checked').length;
+    scoreEl.textContent = count;
+    const idx = count === 0 ? 0 : count <= 2 ? 1 : count <= 4 ? 2 : count <= 6 ? 3 : count <= 8 ? 4 : 5;
+    titleEl.textContent = messages[idx].t;
+    descEl.textContent = messages[idx].d;
+    scoreEl.style.color = count === 0 ? 'var(--mid)' : count <= 3 ? '#E67E22' : 'var(--red)';
+  }
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+      updateScore();
+    });
+  });
+</script>
+</body>
+</html>
