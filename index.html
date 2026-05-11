@@ -29,6 +29,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { overflow-x: hidden; max-width: 100vw; }
 
   html { scroll-behavior: smooth; }
 
@@ -854,7 +855,7 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .hero { padding: 80px 24px; min-height: 100svh; }
-    .section-inner { padding: 60px 20px; }
+    .section-inner { padding: 60px 20px; width: 100%; }
     .intro-grid, .nostudio-grid, .guarantees-grid { grid-template-columns: 1fr; gap: 24px; }
     .services-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; }
@@ -1186,9 +1187,9 @@
   }
 
   @media (max-width: 900px) {
-    .pain-grid { grid-template-columns: 1fr !important; }
-    .fit-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-    .fit-grid > div:first-child { position: static !important; }
+    .pain-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
+    .fit-grid { grid-template-columns: 1fr !important; gap: 32px !important; display: block !important; }
+    .fit-grid > div:first-child { position: static !important; margin-bottom: 32px; }
   }
 
 </style>
@@ -1311,7 +1312,7 @@
 <!-- FIT (Подходит если) -->
 <section style="background:var(--cream)" id="fit">
   <div class="section-inner">
-    <div class="reveal" style="display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:start" class="fit-grid">
+    <div class="fit-grid" style="display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:start">
       <div style="position:sticky;top:120px">
         <div class="section-label">Кому подходит</div>
         <h2 class="section-title" style="margin-bottom:0">Это для вас, если…</h2>
