@@ -862,7 +862,6 @@
     .approach-steps { grid-template-columns: 1fr; }
     .step { border-right: none; border-bottom: 1px solid var(--border); }
     .step:last-child { border-bottom: none; }
-    nav { display: none; }
     #wb-know .section-inner > div[style*="grid"] { grid-template-columns: 1fr !important; }
     #wb-know [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr 1fr !important; }
     #checklist > .section-inner > div[style*="grid"] { grid-template-columns: 1fr !important; }
@@ -874,6 +873,29 @@
     .demo-bonus { flex-direction: column; align-items: flex-start !important; }
     .premium-grid { grid-template-columns: 1fr !important; }
     .premium-grid > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.15) !important; }
+
+    /* Mobile nav — compact horizontal scroll */
+    nav { display: flex !important; padding: 12px 16px !important; }
+    nav.scrolled { padding: 10px 16px !important; }
+    .nav-brand { font-size: 13px !important; flex-shrink: 0; }
+    .nav-links {
+      gap: 16px !important;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      flex-wrap: nowrap;
+      padding-left: 16px;
+      margin-left: 16px;
+      border-left: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      font-size: 9px !important;
+      letter-spacing: 1.5px !important;
+      white-space: nowrap;
+    }
+    /* Hide some nav items on very small screens to avoid clutter */
+    .nav-links li:nth-child(n+6) { display: none; }
     .wb-cols { grid-template-columns: 1fr !important; gap: 24px !important; }
     #wb-know [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr 1fr !important; flex-wrap: wrap; }
   }
@@ -975,6 +997,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     display: block;
   }
 
