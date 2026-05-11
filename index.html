@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>КП — Алексей Чистяков · AI-продюсер карточек WB</title>
+<title>КП — Алексей Чистяков · AI-продюсер карточек для Wildberries</title>
 <meta name="description" content="AI-продвижение карточек косметики на Wildberries. Визуал, SEO и видео без студии и дизайнера. Алексей Чистяков.">
 <meta property="og:title" content="AI-продюсер карточек для Wildberries — Алексей Чистяков">
-<meta property="og:description" content="Карточка под ключ: обложка, 5–7 слайдов, SEO-текст и видеокарточка без студии. Бесплатный аудит за 24 часа.">
+<meta property="og:description" content="Карточка под ключ для любого товара на WB: обложка, 5–7 слайдов, SEO-текст и видеокарточка без студии. Бесплатный аудит за 24 часа.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://alekseytochka.github.io/AI-producer/">
 <meta name="twitter:card" content="summary">
@@ -70,7 +70,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 100px 10vw 100px 12vw;
+    align-items: flex-start;
+    padding: 140px 8vw 120px;
     overflow: hidden;
   }
 
@@ -101,20 +102,17 @@
     color: var(--red);
     text-transform: uppercase;
     margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
   }
 
   .hero-title {
     font-family: 'Tenor Sans', Georgia, sans-serif;
-    font-size: clamp(42px, 5vw, 72px);
-    font-weight: 900;
+    font-size: clamp(40px, 4.5vw, 68px);
+    font-weight: 700;
     color: var(--white);
-    line-height: 1.05;
-    letter-spacing: -0.5px;
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.9s 0.4s forwards;
+    line-height: 1.12;
+    letter-spacing: 0px;
+    margin-bottom: 32px;
+    max-width: 640px;
   }
 
   .hero-title em {
@@ -123,23 +121,19 @@
   }
 
   .hero-sub {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 400;
-    color: rgba(255,255,255,0.72);
+    color: rgba(255,255,255,0.65);
     font-style: normal;
-    max-width: 560px;
-    line-height: 1.8;
-    margin-bottom: 64px;
-    opacity: 0;
-    animation: fadeUp 1s 0.6s forwards;
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 48px;
   }
 
   .hero-author {
     display: flex;
     align-items: center;
     gap: 20px;
-    opacity: 0;
-    animation: fadeUp 1s 0.8s forwards;
   }
 
   .hero-author-line {
@@ -235,6 +229,7 @@
     gap: 56px;
     align-items: stretch;
   }
+  .intro-grid > div { height: 100%; display: flex; flex-direction: column; }
 
   .intro-text {
     font-size: 16px;
@@ -252,8 +247,10 @@
     position: relative;
     overflow: hidden;
     display: flex;
-    align-items: center;
-    min-height: 240px;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+    height: 100%;
   }
 
   .intro-highlight::before {
@@ -804,18 +801,20 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    padding: 20px 40px;
+    padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(15,15,26,0.85);
+    background: rgba(15,15,26,0.6);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    transform: translateY(-100%);
-    transition: transform 0.4s ease;
+    transition: background 0.3s ease, padding 0.3s ease;
   }
 
-  nav.visible { transform: translateY(0); }
+  nav.scrolled {
+    background: rgba(15,15,26,0.9);
+    padding: 14px 40px;
+  }
 
   .nav-brand {
     font-family: 'Tenor Sans', sans-serif;
@@ -854,16 +853,29 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .hero { padding: 80px 24px; }
-    .section-inner { padding: 70px 24px; }
+    .hero { padding: 80px 24px; min-height: 100svh; }
+    .section-inner { padding: 60px 20px; }
     .intro-grid, .nostudio-grid, .guarantees-grid { grid-template-columns: 1fr; gap: 24px; }
     .services-grid { grid-template-columns: 1fr; }
     .pricing-grid { grid-template-columns: 1fr; }
-    .pricing-row2 { grid-template-columns: 1fr; }
+    .pricing-row2 { grid-template-columns: 1fr; max-width: 100% !important; }
     .approach-steps { grid-template-columns: 1fr; }
     .step { border-right: none; border-bottom: 1px solid var(--border); }
     .step:last-child { border-bottom: none; }
     nav { display: none; }
+    #wb-know .section-inner > div[style*="grid"] { grid-template-columns: 1fr !important; }
+    #wb-know [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr 1fr !important; }
+    #checklist > .section-inner > div[style*="grid"] { grid-template-columns: 1fr !important; }
+    .hero-title { font-size: clamp(32px, 8vw, 48px) !important; }
+    .why-grid { grid-template-columns: 1fr !important; }
+    .demo-grid { grid-template-columns: repeat(2,1fr) !important; }
+    .cases-grid { grid-template-columns: 1fr !important; }
+    .safety-grid { grid-template-columns: 1fr !important; }
+    .demo-bonus { flex-direction: column; align-items: flex-start !important; }
+    .premium-grid { grid-template-columns: 1fr !important; }
+    .premium-grid > div:first-child { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.15) !important; }
+    .wb-cols { grid-template-columns: 1fr !important; gap: 24px !important; }
+    #wb-know [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr 1fr !important; flex-wrap: wrap; }
   }
   /* ── CHECKLIST ── */
   .checklist-item {
@@ -919,6 +931,243 @@
     #checklist > .section-inner > div { grid-template-columns: 1fr !important; }
     #wb-know > .section-inner > div:first-of-type { grid-template-columns: 1fr !important; }
   }
+
+  /* ── HERO LAYOUT ── */
+  .hero-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── AVATAR ── */
+  .hero-avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.3s forwards;
+  }
+
+  .hero-avatar-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    max-height: 560px;
+    max-width: 420px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+  }
+
+  .hero-avatar-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-avatar-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-avatar-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: rgba(15,15,26,0.85);
+  }
+
+  .avatar-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .avatar-icon:hover { transform: scale(1.08); background: var(--red-dark); }
+
+  .avatar-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  /* Декоративные уголки */
+  .avatar-border-tl {
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 32px; height: 32px;
+    border-top: 3px solid var(--red);
+    border-left: 3px solid var(--red);
+    pointer-events: none;
+  }
+
+  .avatar-border-br {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 32px; height: 32px;
+    border-bottom: 3px solid var(--red);
+    border-right: 3px solid var(--red);
+    pointer-events: none;
+  }
+
+  .avatar-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+
+  .avatar-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--red);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ── HERO CONTENT RIGHT ── */
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+
+  /* ── INLINE STATS ── */
+  .hero-inline-stats {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 32px 0;
+    padding: 24px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .his-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .his-num {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .his-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+  }
+
+  .his-sep {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hero-layout { grid-template-columns: 1fr; gap: 40px; }
+    .hero-avatar-frame { max-height: 340px; margin: 0 auto; }
+    .hero { padding: 80px 24px 100px; }
+  }
+
+  /* ── FIT BLOCK ── */
+  .fit-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+    padding: 24px 28px;
+    background: var(--white);
+    border-left: 3px solid var(--red);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .fit-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+
+  .fit-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--red);
+    letter-spacing: 1px;
+    padding-top: 3px;
+  }
+
+  .fit-text strong {
+    font-family: 'Tenor Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--charcoal);
+    display: block;
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+
+  .fit-text span {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 900px) {
+    .pain-grid { grid-template-columns: 1fr !important; }
+    .fit-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .fit-grid > div:first-child { position: static !important; }
+  }
+
 </style>
 </head>
 <body>
@@ -927,7 +1176,10 @@
 <nav id="nav">
   <div class="nav-brand">Алексей <span>Чистяков</span></div>
   <ul class="nav-links">
+    <li><a href="#pain">Боль</a></li>
     <li><a href="#services">Услуги</a></li>
+    <li><a href="#why-ai">Подход</a></li>
+    <li><a href="#cases">Кейсы</a></li>
     <li><a href="#pricing">Цены</a></li>
     <li><a href="#wb-know">Знаю WB</a></li>
     <li><a href="#checklist">Ошибки</a></li>
@@ -940,19 +1192,145 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-grid"></div>
-  <div class="hero-label">Коммерческое предложение · 2026</div>
-  <h1 class="hero-title">AI-продюсер<br><em>карточек</em><br>для WB</h1>
-  <p class="hero-sub">Визуал, SEO и видео для косметики на Wildberries — без студии, дизайнера и вашего участия в производстве</p>
-  <div class="hero-author">
-    <div class="hero-author-line"></div>
-    <div>
-      <div class="hero-author-name">Алексей Чистяков</div>
-      <div class="hero-author-role">AI-продюсер карточек для Wildberries</div>
+
+  <div class="hero-layout">
+
+    <!-- LEFT: Avatar video placeholder -->
+    <div class="hero-avatar-wrap">
+      <div class="hero-avatar-frame">
+        <img src="assets/avatar.png" alt="Алексей Чистяков" class="hero-avatar-photo">
+        <!-- Декоративная рамка -->
+        <div class="avatar-border-tl"></div>
+        <div class="avatar-border-br"></div>
+      </div>
+      <!-- Бейдж под видео -->
+      <div class="avatar-badge">
+        <span class="avatar-badge-dot"></span>
+        AI-продюсер · Wildberries
+      </div>
     </div>
+
+    <!-- RIGHT: Content -->
+    <div class="hero-content">
+      <div class="hero-label">Коммерческое предложение · 2026</div>
+      <h1 class="hero-title">AI-продюсер<br><em>карточек</em><br>для WB</h1>
+      <p class="hero-sub">Визуал, SEO и видео для любого товара на WB. Готовая карточка за 3–5 дней — без студии, дизайнера и вашего участия в производстве.</p>
+
+      <!-- Stats inline -->
+      <div class="hero-inline-stats">
+        <div class="his-item">
+          <span class="his-num">5–7</span>
+          <span class="his-label">слайдов</span>
+        </div>
+        <div class="his-sep"></div>
+        <div class="his-item">
+          <span class="his-num">3–5</span>
+          <span class="his-label">дней</span>
+        </div>
+        <div class="his-sep"></div>
+        <div class="his-item">
+          <span class="his-num">0</span>
+          <span class="his-label">студий</span>
+        </div>
+        <div class="his-sep"></div>
+        <div class="his-item">
+          <span class="his-num">24ч</span>
+          <span class="his-label">аудит бесплатно</span>
+        </div>
+      </div>
+
+      <div class="hero-author">
+        <div class="hero-author-line"></div>
+        <div>
+          <div class="hero-author-name">Алексей Чистяков</div>
+          <div class="hero-author-role">AI-продюсер карточек для Wildberries</div>
+        </div>
+      </div>
+    </div>
+
   </div>
+
   <div class="hero-scroll">
     <span>Листать</span>
     <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PAIN POINT -->
+<section style="background:var(--ink);position:relative;overflow:hidden" id="pain">
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(192,57,43,0.15) 0%, transparent 70%);pointer-events:none"></div>
+  <div class="section-inner" style="position:relative;z-index:1">
+    <div class="reveal" style="text-align:center;max-width:860px;margin:0 auto">
+      <div class="section-label" style="color:var(--red)">Знакомая ситуация?</div>
+      <h2 class="section-title" style="color:var(--white);margin-bottom:32px">Карточка есть. Показы есть.<br><em style="color:var(--red);font-style:italic">А продаж — нет.</em></h2>
+      <p style="font-size:19px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:48px">Покупатель видит ваш товар в выдаче, но не кликает. А если кликает — не понимает, почему должен купить именно ваш товар, а не тот, что рядом за те же деньги.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px" class="pain-grid">
+      <div class="reveal" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:32px 28px;text-align:left">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:42px;font-weight:700;color:var(--red);line-height:1;margin-bottom:14px">×</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3">Низкий CTR</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7">Обложка не цепляет. Покупатель прокручивает мимо — даже не задержавшись взглядом на вашем товаре</p>
+      </div>
+      <div class="reveal" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:32px 28px;text-align:left;transition-delay:0.1s">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:42px;font-weight:700;color:var(--red);line-height:1;margin-bottom:14px">×</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3">Слабая конверсия</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7">Зашёл и ушёл. Слайды не отвечают на вопросы, не закрывают возражения — карточка не продаёт</p>
+      </div>
+      <div class="reveal" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:32px 28px;text-align:left;transition-delay:0.2s">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:42px;font-weight:700;color:var(--red);line-height:1;margin-bottom:14px">×</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3">Растущий рекламный бюджет</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7">Платите за показы, но органика не растёт. Карточка не работает на индексацию — каждый клик стоит дорого</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FIT (Подходит если) -->
+<section style="background:var(--cream)" id="fit">
+  <div class="section-inner">
+    <div class="reveal" style="display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:start" class="fit-grid">
+      <div style="position:sticky;top:120px">
+        <div class="section-label">Кому подходит</div>
+        <h2 class="section-title" style="margin-bottom:0">Это для вас, если…</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="fit-item">
+          <div class="fit-num">01</div>
+          <div class="fit-text">
+            <strong>Только запускаете товар на WB</strong>
+            <span>и не хотите тратить недели на сборку команды дизайнеров и копирайтеров</span>
+          </div>
+        </div>
+        <div class="fit-item">
+          <div class="fit-num">02</div>
+          <div class="fit-text">
+            <strong>Карточка есть, но выглядит слабее конкурентов</strong>
+            <span>обложка не цепляет, слайды не продают, видео нет — нужна полная переупаковка</span>
+          </div>
+        </div>
+        <div class="fit-item">
+          <div class="fit-num">03</div>
+          <div class="fit-text">
+            <strong>Хотите быстро протестировать новую обложку</strong>
+            <span>для A/B-теста — без долгого процесса с фотостудией</span>
+          </div>
+        </div>
+        <div class="fit-item">
+          <div class="fit-num">04</div>
+          <div class="fit-text">
+            <strong>Продаёте линейку товаров и нужен единый стиль</strong>
+            <span>чтобы покупатель узнавал ваш бренд в выдаче с первого взгляда</span>
+          </div>
+        </div>
+        <div class="fit-item">
+          <div class="fit-num">05</div>
+          <div class="fit-text">
+            <strong>Не хотите собирать отдельную команду</strong>
+            <span>дизайнера, копирайтера, видеографа и SEO-специалиста — всё в одних руках</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -962,10 +1340,10 @@
     <div class="intro-grid">
       <div class="reveal-left">
         <div class="section-label">О предложении</div>
-        <h2 class="section-title">Карточка, которая помогает покупателю принять решение</h2>
+        <h2 class="section-title" style="max-width:none">Карточка, которая работает для любого товара на WB</h2>
         <div class="red-divider"></div>
         <p class="intro-text">
-          Я создаю карточки косметики на Wildberries с помощью современных AI-инструментов. 
+          Я создаю карточки товаров на Wildberries с помощью современных AI-инструментов. 
           Вместо фотостудии, видеографа и отдельного копирайтера — <strong>один специалист, полный цикл, предсказуемый результат.</strong>
           <br><br>
           Моя задача — не просто сделать красивые картинки, а собрать карточку так, чтобы покупатель 
@@ -974,7 +1352,17 @@
       </div>
       <div class="reveal-right">
         <div class="intro-highlight">
-          <p>Вы присылаете ссылку на товар и фото упаковки. Я возвращаю <strong>готовый комплект файлов</strong> для загрузки на WB. Ваше участие в производстве — минимально.</p>
+          <p style="margin-bottom:0">Вы присылаете ссылку на товар и фото упаковки. Я возвращаю <strong>готовый комплект файлов</strong> для загрузки на WB. Ваше участие в производстве — минимально.</p>
+          <div style="margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0"></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.55);text-transform:uppercase">AI-инструменты последнего поколения</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0"></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.55);text-transform:uppercase">Маркетинговый подход к каждой карточке</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1003,7 +1391,7 @@
         <div class="service-num">02 / ВИЗУАЛ</div>
         <div class="service-title">Фото и инфографика</div>
         <ul class="service-list">
-          <li>Обложка — главный визуал с УТП и эффектом продукта</li>
+          <li>Обложка — первое что видит покупатель в поиске: яркий визуал и главная причина кликнуть</li>
           <li>5–7 слайдов: состав, эффект, применение, для кого</li>
           <li>Фон и окружение продукта без студийной съёмки</li>
           <li>Слайд «Доверие» — сертификаты, натуральность, факты</li>
@@ -1013,7 +1401,7 @@
         <div class="service-num">03 / ВИДЕО</div>
         <div class="service-title">Видеокарточка на AI</div>
         <ul class="service-list">
-          <li>Анимация флакона — вращение, блики, эффекты частиц</li>
+          <li>Анимация товара — вращение, движение, эффекты</li>
           <li>AI-ведущий презентует продукт на русском языке</li>
           <li>Профессиональная озвучка — естественный голос</li>
           <li>Субтитры + финальный монтаж MP4 (30–45 сек)</li>
@@ -1069,6 +1457,136 @@
   </div>
 </section>
 
+<!-- WHY AI -->
+<section style="background:var(--cream)" id="why-ai">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Преимущество подхода</div>
+      <h2 class="section-title">Почему AI — это не экономия, а сила</h2>
+      <p style="font-size:17px;color:var(--mid);line-height:1.8;max-width:760px;margin-bottom:48px">Многие думают, что «без студии» — значит «дешевле и хуже». На самом деле — наоборот. AI-подход даёт то, что традиционная студия дать не может.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px" class="why-grid">
+      <div class="reveal" style="background:var(--white);padding:36px 32px;border-left:3px solid var(--red)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--red);margin-bottom:14px;text-transform:uppercase">Скорость</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:20px;font-weight:700;color:var(--charcoal);margin-bottom:12px">Карточка за 3–5 дней вместо 2–3 недель</h3>
+        <p style="font-size:15px;color:var(--mid);line-height:1.7">Студия — это расписание фотографа, аренда, обработка, согласования. AI-производство — это один процесс с прямой связью со мной</p>
+      </div>
+      <div class="reveal" style="background:var(--white);padding:36px 32px;border-left:3px solid var(--red);transition-delay:0.1s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--red);margin-bottom:14px;text-transform:uppercase">Гибкость</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:20px;font-weight:700;color:var(--charcoal);margin-bottom:12px">Любое количество вариантов под тесты</h3>
+        <p style="font-size:15px;color:var(--mid);line-height:1.7">Нужно три варианта обложки для A/B-теста? В студии — три фотосессии. В AI — три варианта за час. Тестируйте гипотезы быстро</p>
+      </div>
+      <div class="reveal" style="background:var(--white);padding:36px 32px;border-left:3px solid var(--red);transition-delay:0.2s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--red);margin-bottom:14px;text-transform:uppercase">Масштаб</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:20px;font-weight:700;color:var(--charcoal);margin-bottom:12px">Единый стиль на всю линейку товаров</h3>
+        <p style="font-size:15px;color:var(--mid);line-height:1.7">10 карточек в едином стиле сделать в студии — нереальный бюджет. С AI — реальная задача. Бренд узнаваем во всей выдаче</p>
+      </div>
+      <div class="reveal" style="background:var(--white);padding:36px 32px;border-left:3px solid var(--red);transition-delay:0.3s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--red);margin-bottom:14px;text-transform:uppercase">Адаптивность</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:20px;font-weight:700;color:var(--charcoal);margin-bottom:12px">Обновление под каждый сезон и акцию</h3>
+        <p style="font-size:15px;color:var(--mid);line-height:1.7">Новый год, лето, чёрная пятница — каждый раз новая обложка под событие. Без новых фотосессий. Карточка всегда в актуальном контексте</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO CARD -->
+<section style="background:var(--ink)" id="demo">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label" style="color:var(--red)">Как это выглядит</div>
+      <h2 class="section-title" style="color:var(--white)">Что получает заказчик в комплекте</h2>
+      <p style="font-size:17px;color:rgba(255,255,255,0.55);line-height:1.8;max-width:760px;margin-bottom:48px">Каждая карточка — это структурированный комплект файлов, готовый к загрузке в WB. Без догадок «что куда поставить»</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.06);margin-bottom:32px" class="demo-grid">
+      <div class="reveal" style="background:var(--ink);padding:28px 24px;text-align:center">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:44px;font-weight:700;color:var(--red);line-height:1;margin-bottom:8px">1</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:14px">Обложка</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">JPG, 900×1200, готов к загрузке</p>
+      </div>
+      <div class="reveal" style="background:var(--ink);padding:28px 24px;text-align:center;transition-delay:0.1s">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:44px;font-weight:700;color:var(--red);line-height:1;margin-bottom:8px">5–7</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:14px">Слайдов</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">Состав, эффект, применение, для кого, доверие</p>
+      </div>
+      <div class="reveal" style="background:var(--ink);padding:28px 24px;text-align:center;transition-delay:0.2s">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:44px;font-weight:700;color:var(--red);line-height:1;margin-bottom:8px">1</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:14px">Видео</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">MP4, 30–45 сек, с озвучкой и субтитрами</p>
+      </div>
+      <div class="reveal" style="background:var(--ink);padding:28px 24px;text-align:center;transition-delay:0.3s">
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:44px;font-weight:700;color:var(--red);line-height:1;margin-bottom:8px">3</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:14px">Текста</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">Заголовок, описание, характеристики</p>
+      </div>
+    </div>
+    <div class="reveal" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:32px 36px;display:flex;align-items:center;gap:24px" class="demo-bonus">
+      <div style="font-family:'Tenor Sans',sans-serif;font-size:36px;font-weight:700;color:var(--red);flex-shrink:0">+</div>
+      <div>
+        <div style="font-family:'Tenor Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white);margin-bottom:6px">Инструкция по загрузке + чек-лист первых действий</div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.55);line-height:1.7">Что куда загрузить в личном кабинете WB, какие метрики отслеживать первую неделю, когда ждать первых результатов</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section style="background:var(--warm-gray);position:relative;overflow:hidden" id="cases">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;max-width:760px;margin:0 auto 56px">
+      <div class="section-label">Результаты подхода</div>
+      <h2 class="section-title">Что меняется в карточках после переупаковки</h2>
+      <p style="font-size:17px;color:var(--mid);line-height:1.75;margin-top:-16px">Усреднённые показатели по типичным сценариям. Конкретный результат зависит от ниши, конкуренции, цены и других факторов на стороне продавца.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px" class="cases-grid">
+
+      <!-- Case 1 -->
+      <div class="reveal" style="background:var(--white);padding:36px 32px;position:relative;border-top:3px solid var(--red)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--mid);text-transform:uppercase;margin-bottom:20px">Сценарий · Запуск</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <div style="font-family:'Tenor Sans',sans-serif;font-size:56px;font-weight:700;color:var(--red);line-height:1">×2</div>
+          <div style="font-size:14px;color:var(--mid);font-weight:600">CTR</div>
+        </div>
+        <p style="font-size:15px;color:var(--charcoal);line-height:1.65;margin-bottom:20px"><strong>Рост кликабельности обложки</strong> в первую неделю после замены</p>
+        <div style="font-size:13px;color:var(--mid);line-height:1.7;padding-top:16px;border-top:1px solid var(--border)">Новая обложка с инфографикой против обычного фото на белом фоне — покупатель видит ценность сразу в выдаче</div>
+      </div>
+
+      <!-- Case 2 -->
+      <div class="reveal" style="background:var(--white);padding:36px 32px;position:relative;border-top:3px solid var(--red);transition-delay:0.1s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--mid);text-transform:uppercase;margin-bottom:20px">Сценарий · SEO</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <div style="font-family:'Tenor Sans',sans-serif;font-size:56px;font-weight:700;color:var(--red);line-height:1">+40</div>
+          <div style="font-size:14px;color:var(--mid);font-weight:600">% охвата</div>
+        </div>
+        <p style="font-size:15px;color:var(--charcoal);line-height:1.65;margin-bottom:20px"><strong>Больше запросов в выдаче</strong> после полного заполнения характеристик и SEO-заголовка</p>
+        <div style="font-size:13px;color:var(--mid);line-height:1.7;padding-top:16px;border-top:1px solid var(--border)">Карточка попадает в фильтры WB и подсказки поиска по большему числу ключевых запросов покупателей</div>
+      </div>
+
+      <!-- Case 3 -->
+      <div class="reveal" style="background:var(--white);padding:36px 32px;position:relative;border-top:3px solid var(--red);transition-delay:0.2s">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--mid);text-transform:uppercase;margin-bottom:20px">Сценарий · Бренд</div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px">
+          <div style="font-family:'Tenor Sans',sans-serif;font-size:56px;font-weight:700;color:var(--red);line-height:1">×3</div>
+          <div style="font-size:14px;color:var(--mid);font-weight:600">узнаваемость</div>
+        </div>
+        <p style="font-size:15px;color:var(--charcoal);line-height:1.65;margin-bottom:20px"><strong>Бренд узнают в выдаче</strong> когда все карточки линейки сделаны в едином стиле</p>
+        <div style="font-size:13px;color:var(--mid);line-height:1.7;padding-top:16px;border-top:1px solid var(--border)">Покупатель видит ваш товар несколько раз в разных категориях и запоминает — это влияет на повторные покупки</div>
+      </div>
+
+    </div>
+
+    <!-- Trust note -->
+    <div class="reveal" style="margin-top:40px;background:rgba(255,255,255,0.6);border-left:3px solid var(--mid);padding:20px 28px;display:flex;gap:16px;align-items:flex-start">
+      <div style="font-family:'Tenor Sans',sans-serif;font-size:24px;color:var(--mid);line-height:1">!</div>
+      <div>
+        <strong style="font-family:'Tenor Sans',sans-serif;font-size:15px;color:var(--charcoal);display:block;margin-bottom:4px">Честно о результатах</strong>
+        <span style="font-size:14px;color:var(--mid);line-height:1.7">Я не обещаю «рост продаж в 3 раза» — это зависит от десятков факторов на стороне продавца. Я гарантирую качественную переупаковку карточки по маркетинговой логике, которая создаёт условия для роста показателей.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <div class="section-inner">
@@ -1107,7 +1625,86 @@
         <div class="price-badge">Выгодно</div>
         <div class="price-name">Карточка + ведение</div>
         <div class="price-amount">24 000 ₽</div>
-        <div class="price-desc">Пакет «Под ключ» + первый месяц ведения со скидкой 50%. Лучший вариант для старта</div>
+        <div class="price-desc">Пакет «Под ключ» + первый месяц ведения со скидкой 50%. Лучший вариант для старта на WB</div>
+      </div>
+    </div>
+
+    <!-- Premium anchor — fully redesigned -->
+    <div style="margin-top:40px" class="reveal">
+      <div style="position:relative;background:linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);padding:0;overflow:hidden;border:1px solid rgba(192,57,43,0.5);box-shadow:0 20px 60px rgba(192,57,43,0.25)">
+
+        <!-- Decorative pattern -->
+        <div style="position:absolute;top:0;right:0;width:300px;height:100%;background-image:radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);background-size:24px 24px;opacity:0.4;pointer-events:none"></div>
+
+        <div style="position:relative;display:grid;grid-template-columns:1fr 1fr;gap:0" class="premium-grid">
+
+          <!-- LEFT: Content -->
+          <div style="padding:48px 40px;border-right:1px solid rgba(255,255,255,0.15)">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,0.25);padding:8px 16px;margin-bottom:24px">
+              <span style="width:6px;height:6px;border-radius:50%;background:#FFD700;animation:pulse 2s infinite"></span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#FFD700;text-transform:uppercase;font-weight:700">★ Премиум-пакет</span>
+            </div>
+
+            <h3 style="font-family:'Tenor Sans',sans-serif;font-size:32px;font-weight:700;color:var(--white);line-height:1.15;margin-bottom:16px;letter-spacing:-0.5px">Линейка карточек<br>в едином стиле бренда</h3>
+
+            <p style="font-size:16px;color:rgba(255,255,255,0.92);line-height:1.7;margin-bottom:20px;font-weight:600">Это не просто 3 карточки. Это создание узнаваемого бренда в выдаче WB.</p>
+            <p style="font-size:15px;color:rgba(255,255,255,0.75);line-height:1.7;margin-bottom:28px">Когда покупатель видит ваши товары в разных категориях и сразу узнаёт стиль — это работает на доверие, повторные покупки и лояльность к бренду. Один визуальный язык для всей линейки.</p>
+
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                  <span style="color:var(--white);font-size:13px;font-weight:700">✓</span>
+                </div>
+                <div style="font-size:15px;color:rgba(255,255,255,0.92);line-height:1.5"><strong>3 товарных карточки</strong> в единой стилистике — обложки, слайды, видео</div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                  <span style="color:var(--white);font-size:13px;font-weight:700">✓</span>
+                </div>
+                <div style="font-size:15px;color:rgba(255,255,255,0.92);line-height:1.5"><strong>Бренд-гайд</strong> — палитра, шрифты, композиция для будущих карточек</div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                  <span style="color:var(--white);font-size:13px;font-weight:700">✓</span>
+                </div>
+                <div style="font-size:15px;color:rgba(255,255,255,0.92);line-height:1.5"><strong>Шаблоны под расширение</strong> — добавлять новые товары можно дешевле</div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:12px">
+                <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+                  <span style="color:var(--white);font-size:13px;font-weight:700">✓</span>
+                </div>
+                <div style="font-size:15px;color:rgba(255,255,255,0.92);line-height:1.5"><strong>Единый SEO-подход</strong> — ключевые запросы под всю линейку</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Price & visual -->
+          <div style="padding:48px 40px;display:flex;flex-direction:column;justify-content:space-between;position:relative">
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:8px">Стоимость пакета</div>
+              <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:8px">
+                <div style="font-family:'Tenor Sans',sans-serif;font-size:14px;color:rgba(255,255,255,0.5);text-decoration:line-through">60 000 ₽</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;color:#FFD700;background:rgba(0,0,0,0.25);padding:3px 8px">−20%</div>
+              </div>
+              <div style="font-family:'Tenor Sans',sans-serif;font-size:64px;font-weight:700;color:var(--white);line-height:1;margin-bottom:8px">48 000 ₽</div>
+              <div style="font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:32px">за 3 карточки · 16 000 ₽ за каждую</div>
+
+              <div style="background:rgba(0,0,0,0.25);padding:16px 20px;margin-bottom:24px">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <span style="font-size:13px;color:rgba(255,255,255,0.6)">Срок производства</span>
+                  <span style="font-family:'Tenor Sans',sans-serif;font-size:18px;font-weight:700;color:var(--white)">7–10 дней</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span style="font-size:13px;color:rgba(255,255,255,0.6)">Подходит для</span>
+                  <span style="font-size:13px;color:var(--white);font-weight:700">Брендов с 3+ товарами</span>
+                </div>
+              </div>
+            </div>
+
+            <a href="https://t.me/Aleksey_relaxolog_Chistyakov" target="_blank" style="display:inline-block;background:var(--white);color:var(--red-dark);padding:18px 32px;font-family:'Tenor Sans',sans-serif;font-size:15px;font-weight:700;text-decoration:none;text-align:center;letter-spacing:0.5px;transition:transform 0.2s,box-shadow 0.2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 30px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">Обсудить премиум-пакет →</a>
+          </div>
+
+        </div>
       </div>
     </div>
     <p class="pricing-note reveal">При заказе от 3 карточек — <span>скидка 15%</span> на каждую последующую</p>
@@ -1124,17 +1721,17 @@
     <div class="approach-steps">
       <div class="step reveal">
         <div class="step-num">01</div>
-        <div class="step-title">Анализ</div>
-        <p class="step-desc">Изучаю товар, нишу, конкурентов и логику покупателя. AI ускоряет производство, но каждый элемент проверяется вручную на соответствие нише</p>
+        <div class="step-title">Аудит · 2 часа</div>
+        <p class="step-desc">Изучаю товар, нишу, конкурентов и логику покупателя. AI ускоряет анализ, но каждое решение проверяется вручную на соответствие нише</p>
       </div>
       <div class="step reveal" style="transition-delay:0.15s">
         <div class="step-num">02</div>
-        <div class="step-title">Структура</div>
-        <p class="step-desc">Строю карточку по маркетинговой логике: обложка работает на клик, слайды закрывают возражения, видео усиливает доверие</p>
+        <div class="step-title">Прототип · 1 день</div>
+        <p class="step-desc">Строю карточку по маркетинговой логике: обложка работает на клик, слайды закрывают возражения, видео усиливает доверие. Показываю промежуточный результат</p>
       </div>
       <div class="step reveal" style="transition-delay:0.3s">
         <div class="step-num">03</div>
-        <div class="step-title">Результат</div>
+        <div class="step-title">Финал · 3–5 дней</div>
         <p class="step-desc">Готовый комплект файлов с пояснениями — что куда загружать, как отслеживать первые результаты и что менять при необходимости</p>
       </div>
     </div>
@@ -1153,6 +1750,13 @@
     </div>
     <div class="guarantees-grid">
       <div class="reveal-left">
+        <div class="guarantee-item">
+          <div class="guarantee-dot"></div>
+          <div class="guarantee-text">
+            <strong>Не понравился результат — верну предоплату</strong>
+            <span>Если после первого показа прототипа вы решите не продолжать — возвращаю всё что заплатили, без обсуждений</span>
+          </div>
+        </div>
         <div class="guarantee-item">
           <div class="guarantee-dot"></div>
           <div class="guarantee-text">
@@ -1197,7 +1801,7 @@
           <li><strong>«Визуально улучшает тон»</strong> — вместо «осветляет пигментацию»</li>
           <li><strong>«Создаёт ощущение мягкости»</strong> — вместо «разглаживает кожу»</li>
         </ul>
-        <p class="disclaimer">Важно: я усиливаю визуал, текст, SEO и подачу карточки. Продажи зависят не только от карточки, но и от цены, отзывов, рейтинга, остатков, рекламы и конкуренции в нише.</p>
+        <p class="disclaimer">Важно: я усиливаю визуал, текст, SEO и подачу карточки. Конечные продажи зависят также от цены, отзывов, рейтинга продавца, остатков, рекламы и конкуренции в нише — это справедливо для любого товара на WB.</p>
       </div>
     </div>
   </div>
@@ -1208,32 +1812,32 @@
   <div class="section-inner">
     <div class="reveal">
       <div class="section-label" style="color:var(--wb)">Wildberries изнутри</div>
-      <h2 class="section-title" style="color:var(--white)">Знаю платформу — говорю на вашем языке</h2>
+      <h2 class="section-title" style="color:var(--white)">Знаю платформу изнутри — говорю на вашем языке</h2>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px">
+    <div class="wb-cols" style="display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px">
       <!-- Terminology -->
       <div class="reveal-left" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:36px">
         <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:var(--wb);margin-bottom:20px;text-transform:uppercase">Терминология WB</div>
         <div style="display:flex;flex-direction:column;gap:12px">
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
             <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">СПП</span>
-            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Скидка постоянного покупателя — влияет на позицию в выдаче</span>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Скидка постоянного покупателя — влияет на позицию в выдаче</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
             <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">FBO / FBS</span>
-            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Схемы логистики — влияют на скорость доставки и рейтинг</span>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Схемы логистики — влияют на скорость доставки и рейтинг</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
             <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">CTR</span>
-            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Кликабельность обложки — первое что улучшает инфографика</span>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Кликабельность обложки — первое что улучшает инфографика</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06)">
             <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">% выкупа</span>
-            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Для косметики норма 85–95% — зависит от честности карточки</span>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Для большинства категорий норма 70–95% — зависит от честности карточки</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
             <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--wb)">Индексация</span>
-            <span style="font-size:14px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Попадание в поиск по запросам — зависит от SEO в карточке</span>
+            <span style="font-size:13px;color:rgba(255,255,255,0.5);max-width:240px;text-align:right">Попадание в поиск по запросам — зависит от SEO в карточке</span>
           </div>
         </div>
       </div>
@@ -1268,7 +1872,7 @@
     <!-- WB badge -->
     <div class="reveal" style="display:flex;align-items:center;gap:16px;background:rgba(203,17,171,0.1);border:1px solid rgba(203,17,171,0.25);padding:24px 32px">
       <div style="width:10px;height:10px;border-radius:50%;background:var(--wb);flex-shrink:0"></div>
-      <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.6">Работаю только с Wildberries — знаю алгоритмы ранжирования, требования модерации и специфику косметической ниши на этой платформе</p>
+      <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.6">Работаю только с Wildberries — знаю алгоритмы ранжирования, требования модерации и специфику разных ниш: от косметики и одежды до электроники и товаров для дома</p>
     </div>
   </div>
 </section>
@@ -1278,7 +1882,7 @@
   <div class="section-inner">
     <div class="reveal">
       <div class="section-label">Диагностика</div>
-      <h2 class="section-title">10 ошибок карточки, которые убивают продажи на WB</h2>
+      <h2 class="section-title">10 ошибок карточки, которые убивают продажи — в любой нише</h2>
       <p style="font-size:18px;color:var(--mid);font-style:italic;margin-top:-24px;margin-bottom:48px">Отметьте, сколько пунктов есть у вас прямо сейчас</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -1328,14 +1932,14 @@
         <div class="ci-num">07</div>
         <div class="ci-body">
           <strong>Нет слайда «для кого»</strong>
-          <span>Без указания типа кожи и возраста покупатель косметики не понимает — его это или нет. Высокий процент возвратов</span>
+          <span>Без описания портрета покупателя и ситуации использования — покупатель не понимает, его ли это товар. Высокий процент возвратов</span>
         </div>
       </div>
       <div class="checklist-item reveal" data-n="08" style="transition-delay:0.35s">
         <div class="ci-num">08</div>
         <div class="ci-body">
           <strong>Рискованные формулировки в описании</strong>
-          <span>«Убирает морщины», «лечит акне» — без подтверждения это нарушение требований WB и Роспотребнадзора</span>
+          <span>Непроверенные заявления об эффекте — особенно в косметике, БАДах, детских товарах — нарушение требований WB и Роспотребнадзора</span>
         </div>
       </div>
       <div class="checklist-item reveal" data-n="09" style="transition-delay:0.4s">
@@ -1363,14 +1967,63 @@
   </div>
 </section>
 
+<!-- SAFETY -->
+<section style="background:var(--cream)" id="safety">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;max-width:760px;margin:0 auto 56px">
+      <div class="section-label">Прозрачность</div>
+      <h2 class="section-title">Почему со мной безопасно работать</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px" class="safety-grid">
+      <div class="reveal" style="background:var(--white);padding:32px 28px;border:1px solid var(--border);position:relative">
+        <div style="position:absolute;top:-12px;left:28px;background:var(--red);color:var(--white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">1</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:16px;font-weight:700;color:var(--charcoal);margin-bottom:10px;margin-top:8px;line-height:1.35">Понятная структура работы</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.65">Аудит → прототип → согласование → финальные файлы. Вы знаете что происходит на каждом этапе</p>
+      </div>
+
+      <div class="reveal" style="background:var(--white);padding:32px 28px;border:1px solid var(--border);position:relative;transition-delay:0.05s">
+        <div style="position:absolute;top:-12px;left:28px;background:var(--red);color:var(--white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">2</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:16px;font-weight:700;color:var(--charcoal);margin-bottom:10px;margin-top:8px;line-height:1.35">Не прошу доступ к личному кабинету</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.65">Работаю по ссылке на товар и фото упаковки. Ваши данные и доступы остаются у вас</p>
+      </div>
+
+      <div class="reveal" style="background:var(--white);padding:32px 28px;border:1px solid var(--border);position:relative;transition-delay:0.1s">
+        <div style="position:absolute;top:-12px;left:28px;background:var(--red);color:var(--white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">3</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:16px;font-weight:700;color:var(--charcoal);margin-bottom:10px;margin-top:8px;line-height:1.35">Промежуточный результат до финала</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.65">Показываю прототип на середине процесса — корректируем направление до финальной отрисовки</p>
+      </div>
+
+      <div class="reveal" style="background:var(--white);padding:32px 28px;border:1px solid var(--border);position:relative;transition-delay:0.15s">
+        <div style="position:absolute;top:-12px;left:28px;background:var(--red);color:var(--white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">4</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:16px;font-weight:700;color:var(--charcoal);margin-bottom:10px;margin-top:8px;line-height:1.35">2 раунда правок включены</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.65">Без скрытых условий. Мелкие технические правки делаю без ограничений и без доплаты</p>
+      </div>
+
+      <div class="reveal" style="background:var(--white);padding:32px 28px;border:1px solid var(--border);position:relative;transition-delay:0.2s">
+        <div style="position:absolute;top:-12px;left:28px;background:var(--red);color:var(--white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">5</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:16px;font-weight:700;color:var(--charcoal);margin-bottom:10px;margin-top:8px;line-height:1.35">Инструкция по загрузке</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.65">Объясняю что куда загружать в личном кабинете WB и что отслеживать первую неделю</p>
+      </div>
+
+      <div class="reveal" style="background:var(--white);padding:32px 28px;border:1px solid var(--border);position:relative;transition-delay:0.25s">
+        <div style="position:absolute;top:-12px;left:28px;background:var(--red);color:var(--white);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">6</div>
+        <h3 style="font-family:'Tenor Sans',sans-serif;font-size:16px;font-weight:700;color:var(--charcoal);margin-bottom:10px;margin-top:8px;line-height:1.35">Без обещаний «роста в 3 раза»</h3>
+        <p style="font-size:13.5px;color:var(--mid);line-height:1.65">Показываю реальные точки улучшения карточки. Без маркетинговых обещаний которые невозможно гарантировать</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta" id="cta">
   <div class="cta-inner">
     <div class="cta-label reveal">Следующий шаг</div>
     <h2 class="cta-title reveal">Бесплатный<br><em>аудит</em><br>за 24 часа</h2>
-    <p class="cta-sub reveal">Напишите — разберу вашу карточку и покажу точки роста</p>
+    <div class="reveal" style="display:inline-block;background:rgba(192,57,43,0.15);border:1px solid rgba(192,57,43,0.4);padding:8px 20px;margin-bottom:24px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--red);text-transform:uppercase">⚡ Свободных слотов на этой неделе: 3</span></div>
+    <p class="cta-sub reveal">Разберу вашу карточку за 24 часа · покажу точки роста · без обязательств</p>
     <div class="reveal">
-      <a class="cta-btn" href="https://t.me/Aleksey_relaxolog_Chistyakov" target="_blank">Написать в Telegram</a>
+      <a class="cta-btn" href="https://t.me/Aleksey_relaxolog_Chistyakov" target="_blank">Получить бесплатный аудит СЕЙЧАС →</a>
     </div>
     <div class="cta-name reveal" style="margin-top:64px">Алексей Чистяков · AI-продюсер карточек для Wildberries</div>
   </div>
@@ -1386,10 +2039,10 @@
 
   document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
 
-  // Nav show after hero
+  // Nav style change on scroll
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('visible', window.scrollY > window.innerHeight * 0.7);
+    nav.classList.toggle('scrolled', window.scrollY > 80);
   });
 
   // Checklist interactivity
