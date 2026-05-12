@@ -980,10 +980,10 @@
   .hero-avatar-frame {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/4;
-    max-height: 560px;
-    max-width: 420px;
-    background: rgba(255,255,255,0.03);
+    aspect-ratio: 9/16;
+    max-height: 580px;
+    max-width: 330px;
+    background: #000;
     border: 1px solid rgba(255,255,255,0.1);
     overflow: hidden;
   }
@@ -1223,7 +1223,14 @@
     <!-- LEFT: Avatar video placeholder -->
     <div class="hero-avatar-wrap">
       <div class="hero-avatar-frame">
-        <img src="assets/avatar.png" alt="Алексей Чистяков" class="hero-avatar-photo">
+        <iframe
+          src="https://drive.google.com/file/d/1g-xlsMH2Vu07j65yfl5jrYwn_owQPKDr/preview"
+          class="hero-avatar-video"
+          allow="autoplay"
+          allowfullscreen
+          frameborder="0"
+          style="width:100%;height:100%;border:none;display:block"
+        ></iframe>
         <!-- Декоративная рамка -->
         <div class="avatar-border-tl"></div>
         <div class="avatar-border-br"></div>
@@ -1527,7 +1534,7 @@
       <div class="reveal" style="background:var(--ink);padding:28px 24px;text-align:center">
         <div style="font-family:'Tenor Sans',sans-serif;font-size:44px;font-weight:700;color:var(--red);line-height:1;margin-bottom:8px">1</div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.4);text-transform:uppercase;margin-bottom:14px">Обложка</div>
-        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">JPG, 900×1200, готов к загрузке</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6">JPG, 900×1200, готово к загрузке</p>
       </div>
       <div class="reveal" style="background:var(--ink);padding:28px 24px;text-align:center;transition-delay:0.1s">
         <div style="font-family:'Tenor Sans',sans-serif;font-size:44px;font-weight:700;color:var(--red);line-height:1;margin-bottom:8px">5–7</div>
@@ -1779,7 +1786,7 @@
           <div class="guarantee-dot"></div>
           <div class="guarantee-text">
             <strong>Не понравился результат — верну предоплату</strong>
-            <span>Если после первого показа прототипа вы решите не продолжать — возвращаю всё что заплатили, без обсуждений</span>
+            <span>Если после первого показа прототипа вы решите не продолжать — возвращаю всё, что заплатили, без обсуждений</span>
           </div>
         </div>
         <div class="guarantee-item">
@@ -1929,21 +1936,21 @@
         <div class="ci-num">03</div>
         <div class="ci-body">
           <strong>Характеристики заполнены частично</strong>
-          <span>WB ранжирует карточки по фильтрам. Незаполненный «тип кожи» — минус охват по всем связанным запросам</span>
+          <span>WB ранжирует карточки по фильтрам. Незаполненные характеристики — минус охват по всем связанным запросам</span>
         </div>
       </div>
       <div class="checklist-item reveal" data-n="04" style="transition-delay:0.15s">
         <div class="ci-num">04</div>
         <div class="ci-body">
           <strong>Нет ответов на негативные отзывы</strong>
-          <span>В косметике покупатели читают отзывы особенно внимательно. Молчание = отсутствие сервиса</span>
+          <span>Покупатели читают отзывы особенно внимательно. Молчание = отсутствие сервиса</span>
         </div>
       </div>
       <div class="checklist-item reveal" data-n="05" style="transition-delay:0.2s">
         <div class="ci-num">05</div>
         <div class="ci-body">
           <strong>Нет видео в карточке</strong>
-          <span>Покупатель не может потрогать крем. Видео с текстурой и нанесением — единственная замена тактильному опыту</span>
+          <span>Покупатель не может потрогать товар. Видео с демонстрацией — единственная замена тактильному опыту</span>
         </div>
       </div>
       <div class="checklist-item reveal" data-n="06" style="transition-delay:0.25s">
@@ -1986,7 +1993,7 @@
       <div style="font-family:'Tenor Sans',serif;font-size:52px;font-weight:900;color:var(--red);flex-shrink:0" id="score">?</div>
       <div>
         <div style="font-family:'Tenor Sans',serif;font-size:20px;font-weight:700;color:var(--white);margin-bottom:8px" id="score-title">Нажмите на пункты выше, которые есть у вас</div>
-        <div style="font-size:15px;color:rgba(255,255,255,0.5)" id="score-desc">Посчитаем сколько точек роста в вашей карточке</div>
+        <div style="font-size:15px;color:rgba(255,255,255,0.5)" id="score-desc">Посчитаем, сколько точек роста в вашей карточке</div>
       </div>
     </div>
   </div>
